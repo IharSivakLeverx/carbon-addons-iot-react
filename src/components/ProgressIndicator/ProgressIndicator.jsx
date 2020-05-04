@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { ProgressIndicator as CarbonProgressIndicator } from 'carbon-components-react';
@@ -37,6 +37,8 @@ function ProgressStep({
   showLabel,
   stepWidth,
   vertical,
+  stepNumber,
+  nestingLevel
 }) {
   const classes = classnames({
     [`${prefix}--progress-step`]: true,
@@ -54,12 +56,14 @@ function ProgressStep({
   };
 
   const SVGIcon = () => {
+
     if (invalid) {
       return <Warning16 className={`${prefix}--progress__warning`} />;
     }
     if (current) {
       return (
         <CircleFilled16>
+          {(nestingLevel == 0) && <text x="9" y="24">{stepNumber}</text>}
           <title>{description}</title>
         </CircleFilled16>
       );
@@ -67,12 +71,14 @@ function ProgressStep({
     if (complete) {
       return (
         <CheckmarkOutline16>
+          {(nestingLevel == 0) && <text x="9" y="24">{stepNumber}</text>}
           <title>{description}</title>
         </CheckmarkOutline16>
       );
     }
     return (
       <RadioButton16>
+        {(nestingLevel == 0) && <text x="9" y="24">{stepNumber}</text>}
         <title>{description}</title>
       </RadioButton16>
     );
@@ -120,15 +126,14 @@ function ProgressStep({
         aria-disabled={disabled}
         tabIndex={!current && onClick ? 0 : -1}
         onClick={!current ? onClick : undefined}
-        onKeyDown={handleKeyDown}
-      >
+        onKeyDown={handleKeyDown}>
+        <span className={`${prefix}--progress-line`} />
         <span className={`${prefix}--assistive-text`}>{message}</span>
         <SVGIcon />
         <ProgressStepLabel className={`${prefix}--progress-label`}>{label}</ProgressStepLabel>
         {secondaryLabel !== null && secondaryLabel !== undefined ? (
           <p className={secondaryLabelClasses}>{secondaryLabel}</p>
         ) : null}
-        <span className={`${prefix}--progress-line`} />
       </button>
     </li>
   );
@@ -206,6 +211,17 @@ ProgressStep.propTypes = {
    * Used for stepWidht calculation in vertical state
    */
   vertical: PropTypes.bool,
+
+  /**
+   * Used to define a sub step
+   */
+  subStep: PropTypes.bool,
+
+  /**
+  * The number for the main step svg
+  */
+  stepNumber: PropTypes.number
+
 };
 
 ProgressStep.defaultProps = {
@@ -222,6 +238,8 @@ ProgressStep.defaultProps = {
   description: null,
   invalid: false,
   disabled: false,
+  subStep: false,
+  stepNumber: null
 };
 
 const IDPropTypes = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
@@ -279,25 +297,42 @@ const ProgressIndicator = ({
 
   const currentStep = matchingIndex > -1 && matchingIndex;
 
+  const renderItemAndChildren = (item, level, index) => {
+    const hasChildren = item.children && item.children.length > 0;
+    return (
+      <Fragment>{[
+        <ProgressStep
+          id={item.id}
+          key={`${item.id}-step-item-${level}`}
+          nestingLevel={level}
+          label={item.label}
+          secondaryLabel={item.secondaryLabel}
+          description={item.description || item.label}
+          showLabel={showLabels}
+          stepWidth={stepWidth}
+          vertical={isVerticalMode}
+          stepNumber={index + 1}
+        />,
+        ...(hasChildren
+          ? item.children.map((child, index) => renderItemAndChildren(child, level + 1, index))
+          : []),
+      ]}
+
+      </Fragment>)
+  }
+
+  const listSteps = items.map((item, index) => renderItemAndChildren(item, 0, index));
+
+  console.log(listSteps);
+
   return (
     <CarbonProgressIndicator
       className={classnames(className, `${iotPrefix}--progress-indicator`)}
       data-testid="progress-indicator-testid"
       onChange={handleChange}
       currentIndex={currentStep}
-      vertical={isVerticalMode}
-    >
-      {items.map(({ id, label, secondaryLabel, description }) => (
-        <ProgressStep
-          key={id}
-          label={label}
-          secondaryLabel={secondaryLabel}
-          description={description || label}
-          showLabel={showLabels}
-          stepWidth={stepWidth}
-          vertical={isVerticalMode}
-        />
-      ))}
+      vertical={isVerticalMode}>
+      {listSteps}
     </CarbonProgressIndicator>
   );
 };

@@ -1,6 +1,14 @@
 @import '~carbon-components/scss/components/progress-indicator/progress-indicator';
 @import '../../globals/vars';
 
+
+svg text {
+  position: relative;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 .#{$iot-prefix}--progress-indicator {
   &.#{$prefix}--progress--vertical {
     .#{$prefix}--progress-step {

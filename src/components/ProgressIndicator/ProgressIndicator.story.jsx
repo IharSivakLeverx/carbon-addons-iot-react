@@ -15,13 +15,16 @@ const items = [
     description: 'This is displayed when step icon is hovered',
   },
   {
-    id: 'step2',
-    label: 'Second Step',
+    id: 'step2', label: 'Second Step', children: [
+      { id: 'sub1', label: 'Sub Step 1' },
+      { id: 'sub2', label: 'Sub Step 2' },
+      { id: 'sub3', label: 'Sub Step 3' },
+    ]
   },
   { id: 'step3', label: 'Third Step' },
   { id: 'step4', label: 'Fourth Step' },
   { id: 'step5', label: 'Fifth Step' },
-  { id: 'step6', label: 'Sixth Step' },
+
 ];
 class ProgressIndicatorExample extends Component {
   state = {
