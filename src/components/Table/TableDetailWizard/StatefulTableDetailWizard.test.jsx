@@ -1,6 +1,8 @@
 import { mount } from 'enzyme';
 import React from 'react';
 
+import ProgressIndicator from '../../ProgressIndicator/ProgressIndicator';
+
 import { itemsAndComponents } from './TableDetailWizard.story';
 import StatefulTableDetailWizard from './StatefulTableDetailWizard';
 
@@ -120,8 +122,8 @@ describe('StatefulWizardInline', () => {
   });
   test('Handle currentItemId empty', () => {
     const wrapper = mount(<StatefulTableDetailWizard {...commonWizardProps} currentItemId="" />);
-    const element = wrapper.find('ProgressIndicator__StyledProgressIndicator');
-    expect(element.prop('currentIndex')).toEqual(0);
+    const element = wrapper.find(ProgressIndicator);
+    expect(element.prop('currentItemId')).toEqual(commonWizardProps.items[0].id);
   });
   test('Handle nextItem undefined', () => {
     const mockNext = jest.fn();

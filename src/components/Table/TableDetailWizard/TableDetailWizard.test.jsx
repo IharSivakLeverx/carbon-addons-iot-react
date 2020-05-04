@@ -1,6 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
+import ProgressIndicator from '../../ProgressIndicator/ProgressIndicator';
+
 import TableDetailWizard from './TableDetailWizard';
 import { itemsAndComponents } from './TableDetailWizard.story';
 
@@ -53,7 +55,7 @@ describe('TableDetailWizard tests', () => {
         onSubmit={() => jest.fn()}
       />
     );
-    const element = wrapper.find('ProgressIndicator__StyledProgressIndicator');
-    expect(element.prop('currentIndex')).toEqual(0);
+    const element = wrapper.find(ProgressIndicator);
+    expect(element.prop('currentItemId')).toEqual('');
   });
 });

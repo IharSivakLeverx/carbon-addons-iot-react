@@ -2964,6 +2964,7 @@ Map {
     "defaultProps": Object {
       "currentItemId": null,
       "isVerticalMode": false,
+      "items": null,
       "onClickItem": null,
       "showLabels": true,
       "stepWidth": null,
@@ -3012,7 +3013,6 @@ Map {
             "type": "shape",
           },
         ],
-        "isRequired": true,
         "type": "arrayOf",
       },
       "onClickItem": Object {

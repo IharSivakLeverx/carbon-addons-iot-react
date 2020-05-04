@@ -23,6 +23,10 @@
     .#{$prefix}--progress-optional {
       margin-left: $spacing-08;
     }
+    .#{$prefix}--progress-line {
+      width: 1px;
+      height: 100%;
+    }
   }
 
   .#{$prefix}--progress-optional {
@@ -36,11 +40,12 @@
 
   .#{$prefix}--progress-line {
     top: 0;
+    width: 100%;
   }
-}
 
-.#{$prefix}--progress-line {
-  width: 100%;
+  .#{$iot-prefix}--progress-optional-hidden p {
+    display: none;
+  }
 }
 
 .#{$prefix}--skeleton {

@@ -60,16 +60,25 @@ exports[`Storybook Snapshot tests and console checks Storyshots Watson IoT/Table
             width={250}
           >
             <ul
-              className="bx--progress bx--progress--vertical iot--progress-indicator ProgressIndicator__StyledProgressIndicator-sc-1sy51cd-0 fvWusc"
+              className="bx--progress bx--progress--vertical iot--progress-indicator"
+              data-testid="progress-indicator-testid"
               onChange={[Function]}
             >
               <li
-                className="bx--progress-step bx--progress-step--current ProgressIndicator__StyledProgressStep-sc-1sy51cd-1 jNikwx"
+                className="bx--progress-step bx--progress-step--current"
+                style={
+                  Object {
+                    "height": "7rem",
+                    "minHeight": "7rem",
+                  }
+                }
               >
                 <button
+                  aria-disabled={false}
                   className="bx--progress-step-button bx--progress-step-button--unclickable"
                   onKeyDown={[Function]}
                   tabIndex={-1}
+                  type="button"
                 >
                   <span
                     className="bx--assistive-text"
@@ -108,13 +117,21 @@ exports[`Storybook Snapshot tests and console checks Storyshots Watson IoT/Table
                 </button>
               </li>
               <li
-                className="bx--progress-step bx--progress-step--incomplete ProgressIndicator__StyledProgressStep-sc-1sy51cd-1 jNikwx"
+                className="bx--progress-step bx--progress-step--incomplete"
+                style={
+                  Object {
+                    "height": "7rem",
+                    "minHeight": "7rem",
+                  }
+                }
               >
                 <button
+                  aria-disabled={false}
                   className="bx--progress-step-button"
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   tabIndex={0}
+                  type="button"
                 >
                   <span
                     className="bx--assistive-text"
@@ -148,13 +165,21 @@ exports[`Storybook Snapshot tests and console checks Storyshots Watson IoT/Table
                 </button>
               </li>
               <li
-                className="bx--progress-step bx--progress-step--incomplete ProgressIndicator__StyledProgressStep-sc-1sy51cd-1 jNikwx"
+                className="bx--progress-step bx--progress-step--incomplete"
+                style={
+                  Object {
+                    "height": "7rem",
+                    "minHeight": "7rem",
+                  }
+                }
               >
                 <button
+                  aria-disabled={false}
                   className="bx--progress-step-button"
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   tabIndex={0}
+                  type="button"
                 >
                   <span
                     className="bx--assistive-text"
@@ -188,13 +213,21 @@ exports[`Storybook Snapshot tests and console checks Storyshots Watson IoT/Table
                 </button>
               </li>
               <li
-                className="bx--progress-step bx--progress-step--incomplete ProgressIndicator__StyledProgressStep-sc-1sy51cd-1 jNikwx"
+                className="bx--progress-step bx--progress-step--incomplete"
+                style={
+                  Object {
+                    "height": "7rem",
+                    "minHeight": "7rem",
+                  }
+                }
               >
                 <button
+                  aria-disabled={false}
                   className="bx--progress-step-button"
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   tabIndex={0}
+                  type="button"
                 >
                   <span
                     className="bx--assistive-text"
@@ -366,17 +399,26 @@ exports[`Storybook Snapshot tests and console checks Storyshots Watson IoT/Table
             width={250}
           >
             <ul
-              className="bx--progress bx--progress--vertical iot--progress-indicator ProgressIndicator__StyledProgressIndicator-sc-1sy51cd-0 fvWusc"
+              className="bx--progress bx--progress--vertical iot--progress-indicator"
+              data-testid="progress-indicator-testid"
               onChange={[Function]}
             >
               <li
-                className="bx--progress-step bx--progress-step--complete ProgressIndicator__StyledProgressStep-sc-1sy51cd-1 jNikwx"
+                className="bx--progress-step bx--progress-step--complete"
+                style={
+                  Object {
+                    "height": "7rem",
+                    "minHeight": "7rem",
+                  }
+                }
               >
                 <button
+                  aria-disabled={false}
                   className="bx--progress-step-button"
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   tabIndex={0}
+                  type="button"
                 >
                   <span
                     className="bx--assistive-text"
@@ -413,12 +455,20 @@ exports[`Storybook Snapshot tests and console checks Storyshots Watson IoT/Table
                 </button>
               </li>
               <li
-                className="bx--progress-step bx--progress-step--current ProgressIndicator__StyledProgressStep-sc-1sy51cd-1 jNikwx"
+                className="bx--progress-step bx--progress-step--current"
+                style={
+                  Object {
+                    "height": "7rem",
+                    "minHeight": "7rem",
+                  }
+                }
               >
                 <button
+                  aria-disabled={false}
                   className="bx--progress-step-button bx--progress-step-button--unclickable"
                   onKeyDown={[Function]}
                   tabIndex={-1}
+                  type="button"
                 >
                   <span
                     className="bx--assistive-text"
@@ -457,13 +507,21 @@ exports[`Storybook Snapshot tests and console checks Storyshots Watson IoT/Table
                 </button>
               </li>
               <li
-                className="bx--progress-step bx--progress-step--incomplete ProgressIndicator__StyledProgressStep-sc-1sy51cd-1 jNikwx"
+                className="bx--progress-step bx--progress-step--incomplete"
+                style={
+                  Object {
+                    "height": "7rem",
+                    "minHeight": "7rem",
+                  }
+                }
               >
                 <button
+                  aria-disabled={false}
                   className="bx--progress-step-button"
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   tabIndex={0}
+                  type="button"
                 >
                   <span
                     className="bx--assistive-text"
@@ -497,13 +555,21 @@ exports[`Storybook Snapshot tests and console checks Storyshots Watson IoT/Table
                 </button>
               </li>
               <li
-                className="bx--progress-step bx--progress-step--incomplete ProgressIndicator__StyledProgressStep-sc-1sy51cd-1 jNikwx"
+                className="bx--progress-step bx--progress-step--incomplete"
+                style={
+                  Object {
+                    "height": "7rem",
+                    "minHeight": "7rem",
+                  }
+                }
               >
                 <button
+                  aria-disabled={false}
                   className="bx--progress-step-button"
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   tabIndex={0}
+                  type="button"
                 >
                   <span
                     className="bx--assistive-text"
@@ -676,16 +742,25 @@ exports[`Storybook Snapshot tests and console checks Storyshots Watson IoT/Table
             width={250}
           >
             <ul
-              className="bx--progress bx--progress--vertical iot--progress-indicator ProgressIndicator__StyledProgressIndicator-sc-1sy51cd-0 fvWusc"
+              className="bx--progress bx--progress--vertical iot--progress-indicator"
+              data-testid="progress-indicator-testid"
               onChange={[Function]}
             >
               <li
-                className="bx--progress-step bx--progress-step--current ProgressIndicator__StyledProgressStep-sc-1sy51cd-1 jNikwx"
+                className="bx--progress-step bx--progress-step--current"
+                style={
+                  Object {
+                    "height": "7rem",
+                    "minHeight": "7rem",
+                  }
+                }
               >
                 <button
+                  aria-disabled={false}
                   className="bx--progress-step-button bx--progress-step-button--unclickable"
                   onKeyDown={[Function]}
                   tabIndex={-1}
+                  type="button"
                 >
                   <span
                     className="bx--assistive-text"
@@ -724,13 +799,21 @@ exports[`Storybook Snapshot tests and console checks Storyshots Watson IoT/Table
                 </button>
               </li>
               <li
-                className="bx--progress-step bx--progress-step--incomplete ProgressIndicator__StyledProgressStep-sc-1sy51cd-1 jNikwx"
+                className="bx--progress-step bx--progress-step--incomplete"
+                style={
+                  Object {
+                    "height": "7rem",
+                    "minHeight": "7rem",
+                  }
+                }
               >
                 <button
+                  aria-disabled={false}
                   className="bx--progress-step-button"
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   tabIndex={0}
+                  type="button"
                 >
                   <span
                     className="bx--assistive-text"
@@ -764,13 +847,21 @@ exports[`Storybook Snapshot tests and console checks Storyshots Watson IoT/Table
                 </button>
               </li>
               <li
-                className="bx--progress-step bx--progress-step--incomplete ProgressIndicator__StyledProgressStep-sc-1sy51cd-1 jNikwx"
+                className="bx--progress-step bx--progress-step--incomplete"
+                style={
+                  Object {
+                    "height": "7rem",
+                    "minHeight": "7rem",
+                  }
+                }
               >
                 <button
+                  aria-disabled={false}
                   className="bx--progress-step-button"
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   tabIndex={0}
+                  type="button"
                 >
                   <span
                     className="bx--assistive-text"
@@ -804,13 +895,21 @@ exports[`Storybook Snapshot tests and console checks Storyshots Watson IoT/Table
                 </button>
               </li>
               <li
-                className="bx--progress-step bx--progress-step--incomplete ProgressIndicator__StyledProgressStep-sc-1sy51cd-1 jNikwx"
+                className="bx--progress-step bx--progress-step--incomplete"
+                style={
+                  Object {
+                    "height": "7rem",
+                    "minHeight": "7rem",
+                  }
+                }
               >
                 <button
+                  aria-disabled={false}
                   className="bx--progress-step-button"
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   tabIndex={0}
+                  type="button"
                 >
                   <span
                     className="bx--assistive-text"
