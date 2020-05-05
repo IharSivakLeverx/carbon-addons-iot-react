@@ -2,6 +2,29 @@
 @import '../../globals/vars';
 
 
+
+
+.iot-progress {
+  .button-normal {
+    background-color: white;
+    &:hover {
+      background-color: rgb(124, 124, 125);
+    }
+  }
+  .button-current {
+    background-color: rgb(6, 122, 184);
+  }
+  .button-complete {
+    background-color: rgb(121, 213, 178);
+  }
+  .button-sub p{
+    font-weight: 100;
+  }
+  .label {
+    font-weight: 400;
+  }
+}
+
 svg text {
   position: relative;
   color: black;

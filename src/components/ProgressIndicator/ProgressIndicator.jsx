@@ -294,20 +294,6 @@ const ProgressIndicator = ({
   className,
   isVerticalMode,
 }) => {
-  const handleChange = index => {
-    if (onClickItem) {
-      // Parent components are expecting the id not the index
-      onClickItem(items[index].id);
-    }
-  };
-
-  const matchingIndex = useMemo(() => items.findIndex(item => item.id === currentItemId), [
-    items,
-    currentItemId,
-  ]);
-
-  const currentStep = matchingIndex > -1 && matchingIndex;
-
   const renderItemAndChildren = (item, level, index) => {
     const hasChildren = item.children && item.children.length > 0;
     const itemStep = (
@@ -326,11 +312,10 @@ const ProgressIndicator = ({
     );
     const res = hasChildren
       ? [
-          itemStep,
-          ...item.children.map((child, idx) => renderItemAndChildren(child, level + 1, idx)),
-        ]
+        itemStep,
+        ...item.children.map((child, idx) => renderItemAndChildren(child, level + 1, idx)),
+      ]
       : itemStep;
-    console.log(res);
     return res;
   };
 
@@ -339,7 +324,21 @@ const ProgressIndicator = ({
     return acc.concat(stepItems.length > 0 ? stepItems : [stepItems]);
   }, []);
 
-  console.log('final', listSteps);
+
+  const handleChange = index => {
+    if (onClickItem) {
+      // Parent components are expecting the id not the index
+      onClickItem(items[index].id);
+    }
+  };
+
+  const matchingIndex = useMemo(() => items.findIndex(item => item.id === currentItemId), [
+    items,
+    currentItemId,
+  ]);
+
+  const currentStep = matchingIndex > -1 && matchingIndex;
+
 
   return (
     <CarbonProgressIndicator
