@@ -63,7 +63,7 @@ export const IotProgressStep = ({
             [`line-complete-sub`]: complete && subStep,
         });
 
-        return (<div className={classes} />)
+        return (!lastItem ? <div className={classes} /> : null)
     };
 
     const StepLabel = () => {
@@ -232,6 +232,9 @@ export const IotProgressIndicator = ({
     spaceEqually,
     stepWidth
 }) => {
+
+    const sizeOfItems = items.length;
+
     const getStepFromItem = ({ id, label, secondaryLabel, description }, index, level, stepNumber, lastItem = false) => {
         return (
             <IotProgressStep
@@ -259,7 +262,7 @@ export const IotProgressIndicator = ({
         let index = (level == 0) ? 0 : lastIndex
         let stepNumber = 1
 
-        items.forEach((item) => {
+        items.forEach((item, idx) => {
             if (item.children) {
                 let newVal = Object.assign({}, item)
                 delete newVal.children
@@ -273,12 +276,16 @@ export const IotProgressIndicator = ({
                 const last = newList[newList.length - 1];
                 index = (last.props.index + 1)
             } else {
-                newList.push(getStepFromItem(item, index, level, stepNumber))
-
-                index++
-                stepNumber++
+                if (level == 0 && idx == (sizeOfItems - 1)) {
+                    newList.push(getStepFromItem(item, index, level, stepNumber, true))
+                } else {
+                    newList.push(getStepFromItem(item, index, level, stepNumber))
+                    index++
+                    stepNumber++
+                }
             }
         })
+
         return newList
     }
 
