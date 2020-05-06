@@ -1,35 +1,133 @@
-@import '~carbon-components/scss/components/progress-indicator/progress-indicator';
-@import '../../globals/vars';
+@import "~carbon-components/scss/components/progress-indicator/progress-indicator";
+@import "../../globals/vars";
 
+.#{$iot-prefix}--progress {
+  .step-button {
+    display: flex;
+    position: relative;
+    text-align: left;
+    width: 100%;
+    min-height: 5rem;
+    padding: 0;
+    margin: 0;
 
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    border: none;
+  }
 
+  .label {
+    position: absolute;
+    font-family: IBMPlexSans;
+    font-size: 14px;
+    color: #161616;
+    letter-spacing: 0.16px;
+    line-height: 18px;
+    left: 40px;
+    top: 3px;
+  }
 
-.iot-progress {
-  .button-normal {
-    background-color: white;
-    &:hover {
-      background-color: rgb(124, 124, 125);
+  .label-optional {
+    position: absolute;
+    font-family: IBMPlexSans;
+    font-size: 12px;
+    color: #525252;
+    letter-spacing: 0.32px;
+    line-height: 16px;
+    top: 30px;
+    left: 40px;
+  }
+
+  .line {
+    position: absolute;
+    flex: 1 1 auto;
+    width: 2px;
+    height: 100%;
+    background-color: #E0E0E0;
+    top: 24px;
+    left: 11px;
+
+    &-sub {
+      @extend .line;
+      top: 16px;
+    }
+
+    &-complete {
+      @extend .line;
+      background-color: #0f62fe;
+      &-sub {
+        @extend .line-complete;
+        top: 16px;
+      }
     }
   }
-  .button-current {
-    background-color: rgb(6, 122, 184);
-  }
-  .button-complete {
-    background-color: rgb(121, 213, 178);
-  }
-  .button-sub p{
-    font-weight: 100;
-  }
-  .label {
-    font-weight: 400;
-  }
-}
 
-svg text {
-  position: relative;
-  color: black;
-  font-size: 1.5rem;
-  font-weight: bold;
+  @mixin icon-label($sub: false) {
+    p {
+      font-family: IBMPlexSans-SemiBold;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 24px;
+
+      @if ($sub == true) {
+        font-size: 0.5rem;
+      } @else {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  @mixin icon($border-color, $background-color: unset, $color: unset) {
+    .step-icon {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      top: 0;
+      left: 0;
+
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border: 2px solid $border-color;
+
+      display: flex;
+      align-items: center;
+      text-align: center;
+
+      color: $color;
+      background-color: $background-color;
+
+      @include icon-label();
+
+      &-sub {
+        @extend .step-icon;
+        width: 16px;
+        height: 16px;
+        margin-left: 4px;
+        margin-right: 4px;
+        @include icon-label(true);
+      }
+    }
+  }
+
+  .step-current {
+    @include icon($border-color: #0f62fe, $background-color: #0f62fe, $color: white);
+  }
+  .step-complete {
+    @include icon($border-color: #0f62fe, $color: #0f62fe);
+  }
+  .step-incomplete {
+    @include icon(#171717);
+  }
+  .step-disabled {
+    @include icon(#bebebe);
+  }
+  .step-error {
+    @include icon(#dd3b41);
+  }
 }
 
 .#{$iot-prefix}--progress-indicator {
@@ -65,8 +163,17 @@ svg text {
   }
 
   .#{$prefix}--progress-step svg {
+    flex: content;
     margin-left: $spacing-03;
     margin-right: $spacing-03;
+    text {
+      position: relative;
+      size: 1rem;
+      line-height: 1rem;
+      letter-spacing: 0.16px;
+      text-align: center;
+      font-size: 1rem;
+    }
   }
 
   .#{$prefix}--progress-line {
@@ -85,7 +192,7 @@ svg text {
   }
 }
 
-html[dir='rtl'] {
+html[dir="rtl"] {
   .#{$iot-prefix}--progress-indicator {
     &.#{$prefix}--progress--vertical {
       .#{$prefix}--progress-step-button {

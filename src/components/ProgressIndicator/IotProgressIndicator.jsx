@@ -1,25 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { CheckmarkOutline16, Warning16, RadioButton16, CircleFilled16 } from '@carbon/icons-react';
 import { keys, matches } from 'carbon-components-react/es/internal/keyboard';
 
 import { settings } from '../../constants/Settings';
 
 const { prefix, iotPrefix } = settings;
-
-const defaultRenderLabel = props => <p {...props} />;
-
-const defaultTranslations = {
-    'carbon.progress-step.complete': 'Complete',
-    'carbon.progress-step.incomplete': 'Incomplete',
-    'carbon.progress-step.current': 'Current',
-    'carbon.progress-step.invalid': 'Invalid',
-};
-
-function translateWithId(messageId) {
-    return defaultTranslations[messageId];
-}
 
 export const IotProgressStep = ({
     id,
@@ -31,34 +17,24 @@ export const IotProgressStep = ({
     currentIndex,
     onChange,
     disabled,
-    renderLabel: ProgressStepLabel,
-    translateWithId: t,
     showLabel,
     stepWidth,
     vertical,
     invalid,
     level,
-    stepNumber
+    stepNumber,
+    lastItem
 }) => {
-
-
     const current = (currentStep == id);
     const complete = (currentIndex > index);
     const incomplete = (currentIndex < index);
-
+    const mainStep = (level == 0)
+    const subStep = (level > 0)
+    const checkmark = '✔';
 
     const handleClick = () => {
         onChange(id, index);
     }
-
-    const classes = classnames({
-        [`${prefix}--progress-step`]: true,
-        [`${prefix}--progress-step--current`]: current,
-        [`${prefix}--progress-step--complete`]: complete,
-        [`${prefix}--progress-step--incomplete`]: incomplete && !current,
-        [`${prefix}--progress-step--disabled`]: disabled,
-    });
-
 
     const handleKeyDown = e => {
         if (matches(e, [keys.Enter, keys.Space])) {
@@ -66,59 +42,70 @@ export const IotProgressStep = ({
         }
     };
 
-    const SVGIcon = () => {
-        if (invalid) {
-            return <Warning16 className={`${prefix}--progress__warning`} />;
-        }
-        if (current) {
-            return (
-                <CircleFilled16>
-                    {level == 0 && (
-                        <text x="9" y="24">
-                            {stepNumber}
-                        </text>
-                    )}
-                    <title>{description}</title>
-                </CircleFilled16>
-            );
-        }
-        if (complete) {
-            return (
-                <CheckmarkOutline16>
-                    {level == 0 && (
-                        <text x="9" y="24">
-                            {stepNumber}
-                        </text>
-                    )}
-                    <title>{description}</title>
-                </CheckmarkOutline16>
-            );
-        }
+    const StepIcon = () => {
+        const classes = classnames({
+            [`step-icon`]: mainStep,
+            [`step-icon-sub`]: subStep
+        });
+
         return (
-            <RadioButton16>
-                {level == 0 && (
-                    <text x="9" y="24">
-                        {stepNumber}
-                    </text>
-                )}
-                <title>{description}</title>
-            </RadioButton16>
-        );
+            <div className={classes}>
+                {mainStep ? (<p>{complete ? checkmark : stepNumber}</p>) : complete && (<p>{checkmark}</p>)}
+            </div>
+        )
     };
 
-    let message = t('carbon.progress-step.incomplete');
+    const StepLine = () => {
+        const classes = classnames({
+            [`line`]: !complete && !subStep,
+            [`line-sub`]: !complete && subStep,
+            [`line-complete`]: complete && !subStep,
+            [`line-complete-sub`]: complete && subStep,
+        });
 
-    if (current) {
-        message = t('carbon.progress-step.current');
-    }
+        return (<div className={classes} />)
+    };
 
-    if (complete) {
-        message = t('carbon.progress-step.complete');
-    }
+    const StepLabel = () => {
+        const classes = classnames({
+            [`label`]: true
+        });
 
-    if (invalid) {
-        message = t('carbon.progress-step.invalid');
-    }
+        return (<p className={classes}>{label}</p>)
+    };
+
+    const StepSecondaryLabel = () => {
+        const classes = classnames({
+            [`label-optional`]: true
+        });
+
+        return (
+            secondaryLabel !== null && secondaryLabel !== undefined ? (
+                <p className={classes}>{secondaryLabel}</p>
+            ) : null)
+    };
+
+    const StepButton = () => {
+        const classes = classnames({
+            [`step-button`]: true,
+            [`optional-hidden`]: !showLabel && !current
+        });
+
+        return (
+            <button
+                className={classes}
+                type="button"
+                aria-disabled={disabled}
+                onClick={handleClick}
+                onKeyDown={handleKeyDown}
+            >
+                <StepLine />
+                <StepIcon />
+                <StepLabel />
+                <StepSecondaryLabel />
+            </button>
+        )
+    };
 
     const getStepWidth = () => {
         if (stepWidth != null && stepWidth >= 0) {
@@ -129,33 +116,16 @@ export const IotProgressStep = ({
         return undefined;
     };
 
-    const buttonClasses = classnames({
-        [`${prefix}--progress-step-button`]: true,
-        [`${iotPrefix}--progress-optional-hidden`]: !showLabel && !current,
-        [`${prefix}--progress-step-button--unclickable`]: !onChange || current,
+    const classes = classnames({
+        [`step-current`]: current,
+        [`step-complete`]: complete,
+        [`step-incomplete`]: incomplete && !current,
+        [`step-disabled`]: disabled,
     });
-
-    const secondaryLabelClasses = classnames({
-        [`${prefix}--progress-optional`]: true
-    });
-
 
     return (
         <li className={classes} style={getStepWidth()}>
-            <button
-                className={buttonClasses}
-                type="button"
-                aria-disabled={disabled}
-                onClick={handleClick}
-                onKeyDown={handleKeyDown}>
-                <span className={`${prefix}--progress-line`} />
-                <span className={`${prefix}--assistive-text`}>{message}</span>
-                <SVGIcon />
-                <ProgressStepLabel className={`${prefix}--progress-label`}>{label}</ProgressStepLabel>
-                {secondaryLabel !== null && secondaryLabel !== undefined ? (
-                    <p className={secondaryLabelClasses}>{secondaryLabel}</p>
-                ) : null}
-            </button>
+            <StepButton />
         </li>
     )
 }
@@ -196,12 +166,6 @@ IotProgressStep.propTypes = {
      */
     secondaryLabel: PropTypes.string,
 
-    /*
-     * An optional parameter to allow for overflow content to be rendered in a
-     * tooltip.
-     */
-    renderLabel: PropTypes.func,
-
     /**
      * Specify whether the step is disabled
      */
@@ -211,12 +175,6 @@ IotProgressStep.propTypes = {
      * A callback called if the step is clicked or the enter key is pressed
      */
     onClick: PropTypes.func,
-
-    /**
-     * Optional method that takes in a message id and returns an
-     * internationalized string.
-     */
-    translateWithId: PropTypes.func,
 
     /**
      * The option to hide secondaryLabel
@@ -242,11 +200,14 @@ IotProgressStep.propTypes = {
      * The number for the main step svg
      */
     stepNumber: PropTypes.number,
+
+    /**
+     * Check whether it is the last step
+     */
+    lastItem: PropTypes.bool
 }
 
 IotProgressStep.defaultProps = {
-    renderLabel: defaultRenderLabel,
-    translateWithId,
     showLabel: true,
     vertical: false,
     secondaryLabel: null,
@@ -260,8 +221,8 @@ IotProgressStep.defaultProps = {
     disabled: false,
     subStep: false,
     stepNumber: null,
+    lastItem: false
 }
-
 
 export const IotProgressIndicator = ({
     items,
@@ -271,7 +232,7 @@ export const IotProgressIndicator = ({
     spaceEqually,
     stepWidth
 }) => {
-    const getStepFromItem = ({ id, label, secondaryLabel, description }, index, level, stepNumber) => {
+    const getStepFromItem = ({ id, label, secondaryLabel, description }, index, level, stepNumber, lastItem = false) => {
         return (
             <IotProgressStep
                 id={id}
@@ -288,6 +249,7 @@ export const IotProgressIndicator = ({
                 vertical={isVerticalMode}
                 showLabel={showLabels}
                 stepWidth={stepWidth}
+                lastItem={lastItem}
             />
         )
     }
@@ -299,22 +261,23 @@ export const IotProgressIndicator = ({
 
         items.forEach((item) => {
             if (item.children) {
-
                 let newVal = Object.assign({}, item)
                 delete newVal.children
                 newList.push(getStepFromItem(newVal, index, level, stepNumber))
+
                 index++
                 stepNumber++
+
                 newList = newList.concat(getSteps(item.children, (level + 1), index))
 
                 const last = newList[newList.length - 1];
                 index = (last.props.index + 1)
             } else {
                 newList.push(getStepFromItem(item, index, level, stepNumber))
+
                 index++
                 stepNumber++
             }
-
         })
         return newList
     }
@@ -328,7 +291,6 @@ export const IotProgressIndicator = ({
         return index > -1 ? index : 0
     }
 
-
     const [currentStep, setCurrentStep] = useState(getInitialItemId);
     const [currentIndex, setCurrentIndex] = useState(getInitialIndex);
 
@@ -336,16 +298,14 @@ export const IotProgressIndicator = ({
         if (currentStep != step) {
             setCurrentStep(step);
             setCurrentIndex(index)
-            console.log(`Button ${step} with index ${index} triggered event`)
         }
     }
 
     const classes = classnames({
-        [`${iotPrefix}--progress-indicator`]: true,
-        [`${prefix}--progress`]: true,
+        [`${iotPrefix}--progress`]: true,
         [`${prefix}--progress--vertical`]: isVerticalMode,
         [`${prefix}--progress--space-equal`]: spaceEqually && !isVerticalMode,
-      });
+    });
 
     return (
         <ul
@@ -363,15 +323,10 @@ IotProgressIndicator.propTypes = {
     items: PropTypes.arrayOf(
         PropTypes.shape({ id: IDPropTypes, label: PropTypes.string.isRequired })
     ),
-
     currentItemId: IDPropTypes,
-
     onClickItem: PropTypes.func,
-
     showLabels: PropTypes.bool,
-
     stepWidth: PropTypes.number,
-
     isVerticalMode: PropTypes.bool,
 }
 
